@@ -10,7 +10,7 @@ public class ArmGet : MonoBehaviour
     [Tooltip("手的Transform组件引用")]
     public Transform armHand;   
     [Tooltip("伸长速度（单位：每秒移动的单位数）")]
-    public float extendSpeed = 5f;  
+    public float extendSpeed = 5f;
     
     // 静态变量，用于控制角色是否可以移动
     public static bool canMove = true;
@@ -24,6 +24,8 @@ public class ArmGet : MonoBehaviour
     private float currentExtendedDistance; // 当前已伸展的距离
     private Transform parentTransform; // 父物体的Transform
     private PlayerMovement playerMovement; // 角色移动脚本引用
+
+ 
     
     // Start is called before the first frame update
     void Start()
