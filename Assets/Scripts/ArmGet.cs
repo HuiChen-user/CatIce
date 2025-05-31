@@ -12,6 +12,9 @@ public class ArmGet : MonoBehaviour
     [Tooltip("伸长速度（单位：每秒移动的单位数）")]
     public float extendSpeed = 5f;  
     
+    // 静态变量，用于控制角色是否可以移动
+    public static bool canMove = true;
+    
     private Vector3 targetPosition;   // 目标位置
     private bool isMoving = false;    // 是否正在移动
     private bool isExtending = true;  // true为伸展，false为缩回
@@ -19,6 +22,8 @@ public class ArmGet : MonoBehaviour
     private float initialLineScale;    // 线的初始缩放值
     private float targetDistance;      // 目标距离
     private float currentExtendedDistance; // 当前已伸展的距离
+    private Transform parentTransform; // 父物体的Transform
+    private PlayerMovement playerMovement; // 角色移动脚本引用
     
     // Start is called before the first frame update
     void Start()
@@ -31,17 +36,36 @@ public class ArmGet : MonoBehaviour
         {
             initialLineScale = armLine.localScale.x;
         }
+        // 确保开始时角色可以移动
+        canMove = true;
+        
+        // 获取父物体的Transform和PlayerMovement组件
+        parentTransform = transform.parent;
+        if (parentTransform != null)
+        {
+            playerMovement = parentTransform.GetComponent<PlayerMovement>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         // 检测鼠标点击
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canMove) // 只有在可以移动时才响应点击
         {
             // 获取鼠标点击的世界坐标
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0; // 确保在2D平面上
+            
+            // 检查是否需要翻转角色
+            if (playerMovement != null)
+            {
+                bool shouldFaceRight = mousePos.x > transform.position.x;
+                if (shouldFaceRight != playerMovement.IsFacingRight)
+                {
+                    playerMovement.FlipCharacter();
+                }
+            }
             
             // 计算方向并旋转手臂
             Vector3 direction = (mousePos - transform.position).normalized;
@@ -55,6 +79,9 @@ public class ArmGet : MonoBehaviour
             currentExtendedDistance = 0f; // 重置当前伸展距离
             isMoving = true;
             isExtending = true;
+            
+            // 禁止角色移动
+            canMove = false;
             
             // 重置手和线的位置
             if (armHand != null)
@@ -173,8 +200,9 @@ public class ArmGet : MonoBehaviour
             // 重置手的位置
             armHand.localPosition = initialHandPosition;
             
-            // 结束移动
+            // 结束移动并允许角色移动
             isMoving = false;
+            canMove = true;
         }
     }
 }

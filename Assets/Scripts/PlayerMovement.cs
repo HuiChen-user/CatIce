@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("ÒÆ¶¯²ÎÊý")]
-    [Tooltip("½ÇÉ«×óÓÒÒÆ¶¯ËÙ¶È£¨µ¥Î»£ºµ¥Î»/Ãë£©")]
+    [Header("ç§»åŠ¨è®¾ç½®")]
+    [Tooltip("è§’è‰²åŸºç¡€ç§»åŠ¨é€Ÿåº¦ï¼ˆå•ä½ï¼šå•ä½/ç§’ï¼‰")]
     public float moveSpeed = 5f;
 
-    [Header("ÌøÔ¾²ÎÊý")]
-    [Tooltip("ÌøÔ¾µÄË²¼äÏòÉÏµÄ³åÁ¦£¨µ¥Î»£ºN£©")]
+    [Header("è·³è·ƒè®¾ç½®")]
+    [Tooltip("è·³è·ƒæ—¶çž¬æ—¶å‘ä¸Šçš„åˆé€Ÿåº¦ï¼ˆå•ä½ï¼šNï¼‰")]
     public float jumpForce = 12f;
 
-    [Header("µØÃæ¼ì²â")]
-    [Tooltip("µØÃæ²ã¼¶ Mask£¬È·±£µØÃæ¶ÔÏóµÄ Layer ±»°üº¬ÔÚ´Ë Mask ÖÐ¡£")]
+    [Header("åœ°é¢å±‚")]
+    [Tooltip("åœ°é¢å±‚çº§ Maskï¼Œç¡®ä¿åœ°é¢æ‰€åœ¨ Layer åŒ…å«åœ¨æ­¤ Mask ä¸­ã€‚")]
     public LayerMask whatIsGround;
 
     private Rigidbody2D rb;
-    private float moveInput;       // Ë®Æ½ÒÆ¶¯Öµ
-    private bool isGrounded;       // ÊÇ·ñÕýÕ¾ÔÚµØÃæÉÏ
-    private bool jumpPressed;      // ÊÇ·ñ°´ÏÂÌøÔ¾¼ü
+    private float moveInput;       // æ°´å¹³ç§»åŠ¨å€¼
+    private bool isGrounded;       // æ˜¯å¦æ­£ç«™åœ¨åœ°é¢ä¸Š
+    private bool jumpPressed;      // æ˜¯å¦æŒ‰ä¸‹è·³è·ƒé”®
+    private bool isFacingRight = true;  // è§’è‰²æ˜¯å¦é¢å‘å³è¾¹
 
+    // å…¬å¼€æœå‘çŠ¶æ€çš„åªè¯»å±žæ€§
+    public bool IsFacingRight => isFacingRight;
+
+    private ArmGet _armGet;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -28,42 +33,74 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        //»ñÈ¡Ë®Æ½ÊäÈë
-        moveInput = Input.GetAxisRaw("Horizontal");
-
-        //ÊÇ·ñ°´ÏÂÌøÔ¾¼ü
-        if (Input.GetButtonDown("Jump"))
+        // åªæœ‰åœ¨å…è®¸ç§»åŠ¨æ—¶æ‰èŽ·å–è¾“å…¥
+        if (ArmGet.canMove)
         {
-            jumpPressed = true;
+            //èŽ·å–æ°´å¹³è¾“å…¥
+            moveInput = Input.GetAxisRaw("Horizontal");
+
+            //æ˜¯å¦æŒ‰ä¸‹è·³è·ƒé”®
+            if (Input.GetButtonDown("Jump"))
+            {
+                jumpPressed = true;
+            }
+        }
+        else
+        {
+            // å½“ä¸å…è®¸ç§»åŠ¨æ—¶ï¼Œæ¸…é™¤æ‰€æœ‰è¾“å…¥
+            moveInput = 0;
+            jumpPressed = false;
         }
     }
 
     private void FixedUpdate()
     {
-       
-
-        
-        //Ë®Æ½ÒÆ¶¯
-        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-
-        if (jumpPressed && isGrounded)
+        // åªæœ‰åœ¨å…è®¸ç§»åŠ¨æ—¶æ‰æ‰§è¡Œç§»åŠ¨
+        if (ArmGet.canMove)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce); // Ö»ÒªÊÇ½Ó´¥µØÃæ£¬¾Í¿ÉÒÔÌøÔ¾
-            jumpPressed = false; // ÖØÖÃÌøÔ¾ÇëÇó
-        }
+            //æ°´å¹³ç§»åŠ¨
+            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
-        //½ÇÉ«³¯Ïò
-        if (moveInput > 0.01f)
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        else if (moveInput < -0.01f)
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            if (jumpPressed && isGrounded)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                jumpPressed = false;
+            }
+
+            //è§’è‰²ç¿»è½¬
+            if (moveInput > 0.01f && !isFacingRight)
+            {
+                FlipCharacter();
+            }
+            else if (moveInput < -0.01f && isFacingRight)
+            {
+                FlipCharacter();
+            }
+        }
+        else
+        {
+            // å½“ä¸å…è®¸ç§»åŠ¨æ—¶ï¼Œä¿æŒåž‚ç›´é€Ÿåº¦ï¼ˆé‡åŠ›ï¼‰ä½†åœæ­¢æ°´å¹³ç§»åŠ¨
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+    }
+
+    // å…¬å¼€ç¿»è½¬æ–¹æ³•ä¾›å¤–éƒ¨è°ƒç”¨
+    public void FlipCharacter()
+    {
+        // ç¿»è½¬è§’è‰²æœå‘
+        isFacingRight = !isFacingRight;
+        
+        // ä½¿ç”¨æ—‹è½¬è€Œä¸æ˜¯ç¼©æ”¾æ¥ç¿»è½¬è§’è‰²
+        Vector3 rotation = transform.eulerAngles;
+        rotation.y = isFacingRight ? 0f : 180f;
+        transform.eulerAngles = rotation;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Ground"))
         {
-            isGrounded = true; // Èç¹ûÅö×²µ½µØÃæ£¬¾ÍÈÏÎªÔÚµØÃæÉÏ
+            isGrounded = true;
         }
     }
 
@@ -71,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.collider.CompareTag("Ground"))
         {
-            isGrounded = false; // Àë¿ªµØÃæÊ±£¬±ê¼ÇÎª²»ÔÚµØÃæÉÏ
+            isGrounded = false;
         }
     }
 }
