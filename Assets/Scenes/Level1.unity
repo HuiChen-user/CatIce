@@ -825,8 +825,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877c287e494386d47aef2656c81b2b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armLine: {fileID: 0}
-  armHand: {fileID: 0}
+  armLine: {fileID: 1925383135}
+  armHand: {fileID: 1925383136}
   extendSpeed: 5
   throwForce: 15
 --- !u!61 &1266850699
@@ -954,6 +954,16 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1266850697}
   m_SourcePrefab: {fileID: 100100000, guid: 5306a47a2e7d8e946b15e95f6cf502d3, type: 3}
+--- !u!4 &1925383135 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2997859881300691725, guid: 5306a47a2e7d8e946b15e95f6cf502d3, type: 3}
+  m_PrefabInstance: {fileID: 1925383134}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1925383136 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5926725581948601773, guid: 5306a47a2e7d8e946b15e95f6cf502d3, type: 3}
+  m_PrefabInstance: {fileID: 1925383134}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2026742109
 GameObject:
   m_ObjectHideFlags: 0
