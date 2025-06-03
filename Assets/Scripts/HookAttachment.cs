@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class HookAttachment : ArmGet
+public class HookAttachment : MonoBehaviour
 {
 
     [Header("∑¢…‰…Ë÷√")]
