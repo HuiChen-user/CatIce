@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveInput;       // 水平移动值
     private bool isGrounded;       // 是否正站在地面上
     private bool jumpPressed;      // 是否按下跳跃键
-    private bool isFacingRight = false;  // 角色是否面向右边
+    public bool isFacingRight = false;  // 角色是否面向右边
 
     
 
