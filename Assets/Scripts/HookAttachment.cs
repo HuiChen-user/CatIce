@@ -17,7 +17,7 @@ public class HookAttachment : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isGrabbing)
+        if (Input.GetKeyDown(KeyCode.E) && isGrabbing&&PlayerArmController.canExtend)
         {
             ThrowObject();
         }

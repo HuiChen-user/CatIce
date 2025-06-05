@@ -23,7 +23,8 @@ public class PlayerArmController : MonoBehaviour
     private float initialLocalPosY;          // 当 localScale=1 时手动对齐的 localPosition.y（＝–spriteOriginalHeight/2）
     private Coroutine activeCoroutine;       // 当前正在跑的伸缩协程
 
-    
+    public static bool canMove = true;
+    public static bool canExtend=true;
 
     void Start()
     {
@@ -60,7 +61,7 @@ public class PlayerArmController : MonoBehaviour
         Vector3 handRootEA=handRoot.eulerAngles;
         hand.transform.eulerAngles=new Vector3(handRootEA.x,handRootEA.y,handRootEA.z-90);
         hand.transform.position = handRoot.transform.position;
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)&&canExtend)
         {
             // 1. 把鼠标位置从屏幕坐标转到世界坐标
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -85,6 +86,8 @@ public class PlayerArmController : MonoBehaviour
 
     private System.Collections.IEnumerator ExtendThenRetract()
     {
+        canExtend = false;
+        canMove = false;
         // —— 伸长阶段 —— 
         // 目标世界长度 extendLength，要算出对应的 localScale.y
         // spriteOriginalHeight = sr.bounds.size.y（当 localScale=1 时）
@@ -135,6 +138,8 @@ public class PlayerArmController : MonoBehaviour
         }
 
         activeCoroutine = null;
+        canMove = true;
+        canExtend = true;
     }
 
     /// <summary>
