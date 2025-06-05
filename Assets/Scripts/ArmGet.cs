@@ -36,7 +36,7 @@ public class ArmGet : MonoBehaviour
         }
         if (armLine != null)
         {
-            initialLineScale = armLine.localScale.x;
+            initialLineScale = armLine.localScale.y;
         }
         // 确保开始时角色可以移动
         canMove = true;
@@ -56,23 +56,40 @@ public class ArmGet : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && canMove) // 只有在可以移动时才响应点击
         {
             // 获取鼠标点击的世界坐标
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0; // 确保在2D平面上
+            Vector3 screenMousePos = Input.mousePosition;
+            Vector3 tempWorldPos = Camera.main.ScreenToWorldPoint(screenMousePos);
+            tempWorldPos.z = 0; // 确保在2D平面上
             
             // 检查是否需要翻转角色
             if (playerMovement != null)
             {
-                bool shouldFaceRight = mousePos.x > transform.position.x;
+                bool shouldFaceRight = tempWorldPos.x > transform.position.x;
                 if (shouldFaceRight != playerMovement.IsFacingRight)
                 {
                     playerMovement.FlipCharacter();
                 }
             }
+
+            //
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0; // 确保在2D平面上
             
             // 计算方向并旋转手臂
-            Vector3 direction = (mousePos - transform.position).normalized;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, angle);
+            Vector3 worldDirection = (mousePos - transform.position).normalized;
+            float worldAngle = Mathf.Atan2(worldDirection.y, worldDirection.x) * Mathf.Rad2Deg;
+            //
+            if(playerMovement!=null)
+            {
+               if(playerMovement.IsFacingRight)
+               {
+                worldAngle=180-worldAngle;
+               }
+              
+               
+            }
+                worldAngle+=90;
+                transform.rotation = Quaternion.Euler(0, 0, worldAngle);
+            
             
             // 设置目标位置和开始伸展
             targetPosition = mousePos;
@@ -93,7 +110,7 @@ public class ArmGet : MonoBehaviour
             if (armLine != null)
             {
                 Vector3 scale = armLine.localScale;
-                scale.x = initialLineScale;
+                scale.y = initialLineScale;
                 armLine.localScale = scale;
             }
         }
@@ -134,12 +151,12 @@ public class ArmGet : MonoBehaviour
             
             // 更新线的长度
             Vector3 lineScale = armLine.localScale;
-            lineScale.x = initialLineScale + currentExtendedDistance;
+            lineScale.y = initialLineScale + currentExtendedDistance;
             armLine.localScale = lineScale;
             
             // 更新手的位置
             Vector3 handPos = armHand.localPosition;
-            handPos.x = currentExtendedDistance;
+            handPos.y = currentExtendedDistance;//*(playerMovement.IsFacingRight?1:-1);
             armHand.localPosition = handPos;
         }
         else
@@ -149,12 +166,12 @@ public class ArmGet : MonoBehaviour
             
             // 更新线的最终长度
             Vector3 lineScale = armLine.localScale;
-            lineScale.x = initialLineScale + targetDistance;
+            lineScale.y = initialLineScale + targetDistance;
             armLine.localScale = lineScale;
             
             // 更新手的最终位置
             Vector3 handPos = armHand.localPosition;
-            handPos.x = targetDistance;
+            handPos.y = targetDistance;
             armHand.localPosition = handPos;
             
             // 开始缩回
@@ -181,12 +198,12 @@ public class ArmGet : MonoBehaviour
             
             // 更新线的长度
             Vector3 lineScale = armLine.localScale;
-            lineScale.x = initialLineScale + currentExtendedDistance;
+            lineScale.y = initialLineScale + currentExtendedDistance;
             armLine.localScale = lineScale;
             
             // 更新手的位置
             Vector3 handPos = armHand.localPosition;
-            handPos.x = currentExtendedDistance;
+            handPos.y = currentExtendedDistance;//*(playerMovement.IsFacingRight?1:-1);
             armHand.localPosition = handPos;
         }
         else
@@ -196,7 +213,7 @@ public class ArmGet : MonoBehaviour
             
             // 重置线的长度
             Vector3 lineScale = armLine.localScale;
-            lineScale.x = initialLineScale;
+            lineScale.y = initialLineScale;
             armLine.localScale = lineScale;
             
             // 重置手的位置

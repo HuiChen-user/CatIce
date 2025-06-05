@@ -460,6 +460,14 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 4917481554860561366, guid: 41834afc3b5f91045bfa9e1537a1db08, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917481554860561366, guid: 41834afc3b5f91045bfa9e1537a1db08, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.58
+      objectReference: {fileID: 0}
     - target: {fileID: 5225885173247167190, guid: 41834afc3b5f91045bfa9e1537a1db08, type: 3}
       propertyPath: m_Layer
       value: 0
