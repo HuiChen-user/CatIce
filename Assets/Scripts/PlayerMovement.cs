@@ -17,10 +17,12 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
 
     private Rigidbody2D rb;
-    private float moveInput;       // 水平移动值
+    public float moveInput;       // 水平移动值
     private bool isGrounded;       // 是否正站在地面上
     private bool jumpPressed;      // 是否按下跳跃键
-    private bool isFacingRight = true;  // 角色是否面向右边
+    public bool isFacingRight = false;  // 角色是否面向右边
+
+    
 
     // 公开朝向状态的只读属性
     public bool IsFacingRight => isFacingRight;
@@ -28,14 +30,17 @@ public class PlayerMovement : MonoBehaviour
     private ArmGet _armGet;
     private void Awake()
     {
+        
         rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
+       
         // 只有在允许移动时才获取输入
         if (ArmGet.canMove)
         {
+            
             //获取水平输入
             moveInput = Input.GetAxisRaw("Horizontal");
 
@@ -47,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            
             // 当不允许移动时，清除所有输入
             moveInput = 0;
             jumpPressed = false;
@@ -70,12 +76,15 @@ public class PlayerMovement : MonoBehaviour
             //角色翻转
             if (moveInput > 0.01f && !isFacingRight)
             {
+                
                 FlipCharacter();
             }
             else if (moveInput < -0.01f && isFacingRight)
             {
+                
                 FlipCharacter();
             }
+            
         }
         else
         {
@@ -92,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         
         // 使用旋转而不是缩放来翻转角色
         Vector3 rotation = transform.eulerAngles;
-        rotation.y = isFacingRight ? 0f : 180f;
+        rotation.y = isFacingRight ? 180f : 0f;
         transform.eulerAngles = rotation;
     }
 

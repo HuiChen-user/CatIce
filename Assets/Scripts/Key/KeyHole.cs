@@ -29,6 +29,7 @@ public class KeyHole : MonoBehaviour
             IsMatched = true;
             onKeyMatched.Invoke(this);
             keyTransform.transform.position = this.transform.position;
+            keyTransform.transform.rotation = this.transform.rotation;
             Destroy(keyTransform.GetComponent<Collider2D>()); // ½ûÖ¹ÔÙ´Î´¥·¢
             keyTransform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         }
