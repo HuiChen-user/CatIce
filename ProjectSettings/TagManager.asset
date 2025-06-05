@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Interactivity
   - IgnoreHook
+  - Hole
   layers:
   - Default
   - TransparentFX
