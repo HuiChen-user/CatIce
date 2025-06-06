@@ -21,6 +21,8 @@ public class WaterUp : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            PlayerArmController.canExtend = true;
+            PlayerArmController.canMove = true;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

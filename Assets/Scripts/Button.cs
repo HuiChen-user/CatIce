@@ -41,4 +41,9 @@ public class Button : MonoBehaviour
             EditPanel.SetActive(false);
         }
     }
+
+    public void Reset()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
