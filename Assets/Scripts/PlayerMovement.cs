@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     // 公开朝向状态的只读属性
     public bool IsFacingRight => isFacingRight;
-
+    private PlayerArmController armController;
     private ArmGet _armGet;
     private void Awake()
     {
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     {
        
         // 只有在允许移动时才获取输入
-        if (ArmGet.canMove)
+        if (PlayerArmController.canMove)
         {
             
             //获取水平输入
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // 只有在允许移动时才执行移动
-        if (ArmGet.canMove)
+        if (PlayerArmController.canMove)
         {
             //水平移动
             rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);

@@ -17,7 +17,7 @@ public class DoorController : MonoBehaviour
         if (isOpen) return;
         isOpen = true;
    
-        this.gameObject.SetActive(false);
+        this.gameObject.SetActive(true);
             
         
     }
