@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class AudioEvent : MonoBehaviour
+public static class AudioEvent
 {
     public static UnityAction<AudioType> OnPlayAudio;
 
