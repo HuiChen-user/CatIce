@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HoleRotation : MonoBehaviour
@@ -9,12 +10,20 @@ public class HoleRotation : MonoBehaviour
     public Vector2 targetPosition = Vector2.zero; // 目标位置
 
     public bool isRotating = false; // 是否正在旋转
-    private HookAttachment hookAttachment; // 引用HookAttachment组件
+    public HookAttachment hookAttachment; // 引用HookAttachment组件
+
+     
+    
+    
 
     private void Start()
     {
         // 获取HookAttachment组件引用
-        hookAttachment = GetComponent<HookAttachment>();
+        
+        
+            //hookAttachment = GetComponent<HookAttachment>();
+        
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -38,6 +47,12 @@ public class HoleRotation : MonoBehaviour
             {
                 rb.bodyType = RigidbodyType2D.Static;
             }
+
+            if (isRotating&&hookAttachment!=null)
+            {
+                hookAttachment.enabled = true;
+                
+            }
         }
     }
 
@@ -49,6 +64,7 @@ public class HoleRotation : MonoBehaviour
             // 确保位置保持在目标位置
             transform.position = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
             transform.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
+            
         }
     }
 } 
