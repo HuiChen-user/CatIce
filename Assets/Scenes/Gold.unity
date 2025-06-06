@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623efe9edc3200e4db4e7e63e68defed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EditPanel: {fileID: 1357565142}
+  menuUI: {fileID: 1357565142}
 --- !u!114 &180367485
 MonoBehaviour:
   m_ObjectHideFlags: 0

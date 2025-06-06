@@ -661,7 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623efe9edc3200e4db4e7e63e68defed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EditPanel: {fileID: 1943925389}
+  menuUI: {fileID: 1943925389}
 --- !u!114 &932458432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2202,7 +2202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623efe9edc3200e4db4e7e63e68defed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EditPanel: {fileID: 1579660421}
+  menuUI: {fileID: 0}
 --- !u!114 &2045182050
 MonoBehaviour:
   m_ObjectHideFlags: 0

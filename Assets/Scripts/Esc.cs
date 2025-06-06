@@ -4,29 +4,37 @@ using UnityEngine;
 
 public class Esc : MonoBehaviour
 {
-    public GameObject EditPanel;
-    private bool isOpen=false;
+    public GameObject menuUI; // 引用你的菜单界面
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        if (menuUI == null)
+        {
+            Debug.LogError("MenuUI reference is not set!");
+            this.enabled = false;
+            return;
+        }
+
+        // 默认隐藏菜单
+        menuUI.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)&&!isOpen)
+        // 检测ESC键按下
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            
-            EditPanel.SetActive(true);
-            
+            ToggleMenu();
         }
-        if (Input.GetKeyDown(KeyCode.Escape) && isOpen)
-        {
-            
-            EditPanel.SetActive(false);
-            
-        }
+    }
+
+    public void ToggleMenu()
+    {
+        bool isMenuActive = menuUI.activeSelf;
+        menuUI.SetActive(!isMenuActive);
+
+        // 锁定/解锁鼠标（根据菜单状态）
+        Cursor.lockState = isMenuActive ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !isMenuActive;
     }
 }
