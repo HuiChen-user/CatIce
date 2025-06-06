@@ -20,11 +20,13 @@ public class Esc : MonoBehaviour
         {
             
             EditPanel.SetActive(true);
+            
         }
         if (Input.GetKeyDown(KeyCode.Escape) && isOpen)
         {
-
+            
             EditPanel.SetActive(false);
+            
         }
     }
 }

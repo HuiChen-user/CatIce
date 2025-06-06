@@ -2106,7 +2106,7 @@ MonoBehaviour:
   - sceneName: StartScene
     bgm: {fileID: 8300000, guid: 34e5c9a08f7447f40a4d1e8a4d0a0e43, type: 3}
     loop: 1
-    volume: 100
+    volume: 1
 --- !u!4 &1297395972
 Transform:
   m_ObjectHideFlags: 0
