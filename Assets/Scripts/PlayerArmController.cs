@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class PlayerArmController : MonoBehaviour
 {
-    [Header("±ØÐëÔÚ Inspector ÖÐ·ÖÅä")]
-    public Transform arm;             // Arm ¸¸½Úµã£¬Pivot ÔÚ¸ù²¿
-    public Transform handLinePivot;   // ¿ÕÎïÌå£¬·ÅÔÚÊÖ¸ù²¿Î»ÖÃ£¬²»¶¯
-    public Transform handLine;        // ÕæÕý´ø SpriteRenderer µÄÎïÌå£¬Pivot ÔÚ Sprite ÖÐÐÄ
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Inspector ï¿½Ð·ï¿½ï¿½ï¿½")]
+    public Transform arm;             // Arm ï¿½ï¿½ï¿½Úµã£¬Pivot ï¿½Ú¸ï¿½ï¿½ï¿½
+    public Transform handLinePivot;   // ï¿½ï¿½ï¿½ï¿½ï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Î»ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½
+    public Transform handLine;        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ SpriteRenderer ï¿½ï¿½ï¿½ï¿½ï¿½å£¬Pivot ï¿½ï¿½ Sprite ï¿½ï¿½ï¿½ï¿½
     public Transform hand;
     public Transform handRoot;
 
-    [Header("ÉìËõ²ÎÊý")]
-    public float extendLength = 2f;   // Òª°ÑÊÖ±ÛÉìµ½ÊÀ½ç×ø±êÖÐ¶à³¤
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    public float extendLength = 2f;   // Òªï¿½ï¿½ï¿½Ö±ï¿½ï¿½ìµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶à³¤
     public float extendDuration = 0.1f;
     public float retractDelay = 0.5f;
     public float retractDuration = 0.1f;
 
-    // Ë½ÓÐ×Ö¶Î£º»º´æÔ­Ê¼Êý¾Ý
-    private SpriteRenderer sr;               // HandLine ÉÏµÄ SpriteRenderer
-    private float spriteOriginalHeight;      // Sprite ÔÚ localScale=1 Ê±£¬ÔÚÊÀ½ç×ø±êÏÂµÄ¸ß¶È
-    private float initialLocalPosY;          // µ± localScale=1 Ê±ÊÖ¶¯¶ÔÆëµÄ localPosition.y£¨£½¨CspriteOriginalHeight/2£©
-    private Coroutine activeCoroutine;       // µ±Ç°ÕýÔÚÅÜµÄÉìËõÐ­³Ì
+    // Ë½ï¿½ï¿½ï¿½Ö¶Î£ï¿½ï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½ï¿½
+    private SpriteRenderer sr;               // HandLine ï¿½Ïµï¿½ SpriteRenderer
+    private float spriteOriginalHeight;      // Sprite ï¿½ï¿½ localScale=1 Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ¸ß¶ï¿½
+    private float initialLocalPosY;          // ï¿½ï¿½ localScale=1 Ê±ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ localPosition.yï¿½ï¿½ï¿½ï¿½ï¿½CspriteOriginalHeight/2ï¿½ï¿½
+    private Coroutine activeCoroutine;       // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½
 
     public static bool canMove = true;
     public static bool canExtend=true;
@@ -30,7 +30,7 @@ public class PlayerArmController : MonoBehaviour
     {
         if (arm == null || handLinePivot == null || handLine == null)
         {
-            Debug.LogError("Çë°Ñ arm¡¢handLinePivot¡¢handLine ¶¼ÍÏµ½½Å±¾Àï¡£");
+            Debug.LogError("ï¿½ï¿½ï¿½ armï¿½ï¿½handLinePivotï¿½ï¿½handLine ï¿½ï¿½ï¿½Ïµï¿½ï¿½Å±ï¿½ï¿½ï¡£");
             enabled = false;
             return;
         }
@@ -38,20 +38,20 @@ public class PlayerArmController : MonoBehaviour
         sr = handLine.GetComponent<SpriteRenderer>();
         if (sr == null)
         {
-            Debug.LogError("HandLine ÐèÒªÓÐÒ»¸ö SpriteRenderer£¡");
+            Debug.LogError("HandLine ï¿½ï¿½Òªï¿½ï¿½Ò»ï¿½ï¿½ SpriteRendererï¿½ï¿½");
             enabled = false;
             return;
         }
 
-        // 1. ¼ÇÂ¼ Sprite ÔÚ localScale=1 Ê±£¬ÔÚÊÀ½ç×ø±êÏÂµÄÊµ¼Ê¸ß¶È
-        //    ×¢Òâ£ºÖ»ÓÐµ± handLine.localScale = Vector3.one ÇÒ handLine.localPosition ÒÑ¶ÔÆëÊ±£¬bounds ²ÅÊÇÕýÈ·Öµ
+        // 1. ï¿½ï¿½Â¼ Sprite ï¿½ï¿½ localScale=1 Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Êµï¿½Ê¸ß¶ï¿½
+        //    ×¢ï¿½â£ºÖ»ï¿½Ðµï¿½ handLine.localScale = Vector3.one ï¿½ï¿½ handLine.localPosition ï¿½Ñ¶ï¿½ï¿½ï¿½Ê±ï¿½ï¿½bounds ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·Öµ
         spriteOriginalHeight = sr.bounds.size.y;
 
-        // 2. ¼ÇÂ¼µ± localScale=1 Ê± handLine.localPosition.y Ó¦¸ÃÊÇ¶àÉÙ£¨Í¨³£ÊÇ ¨CspriteOriginalHeight/2£©
-        //    ÕâÀï¼ÙÉèÄãÔÚ³¡¾°ÀïÒÑ¾­°Ñ handLine µÄ localPosition.y ÉèÎªÁË ¨CspriteOriginalHeight/2
+        // 2. ï¿½ï¿½Â¼ï¿½ï¿½ localScale=1 Ê± handLine.localPosition.y Ó¦ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½Ù£ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ ï¿½CspriteOriginalHeight/2ï¿½ï¿½
+        //    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ handLine ï¿½ï¿½ localPosition.y ï¿½ï¿½Îªï¿½ï¿½ ï¿½CspriteOriginalHeight/2
         initialLocalPosY = handLine.localPosition.y;
 
-        // £¨¿ÉÑ¡Ð£Ñé£©Èç¹ûÄãÏë×Ô¶¯¶ÔÆë£¬Ò²¿ÉÒÔÔÚ´úÂëÀïÇ¿ÖÆµ÷ÕûÒ»´Î£º
+        // ï¿½ï¿½ï¿½ï¿½Ñ¡Ð£ï¿½é£©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ë£¬Ò²ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½Æµï¿½ï¿½ï¿½Ò»ï¿½Î£ï¿½
         //    initialLocalPosY = -spriteOriginalHeight / 2f;
         //    handLine.localPosition = new Vector3(handLine.localPosition.x, initialLocalPosY, handLine.localPosition.z);
     }
@@ -63,19 +63,19 @@ public class PlayerArmController : MonoBehaviour
         hand.transform.position = handRoot.transform.position;
         if (Input.GetMouseButtonDown(0)&&canExtend)
         {
-            // 1. °ÑÊó±êÎ»ÖÃ´ÓÆÁÄ»×ø±ê×ªµ½ÊÀ½ç×ø±ê
+            // 1. ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã´ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorld.z = 0f;
 
-            // 2. ¼ÆËã·½ÏòÏòÁ¿£¬²¢ÈÃ arm ³¯ÏòÊó±ê£¨Í¬ÑùÒª¸ù¾ÝÄãÌùÍ¼³¯Ïò×öÆ«ÒÆ£¬±ÈÈç ¨C90¡ã »ò +90¡ã£©
+            // 2. ï¿½ï¿½ï¿½ã·½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ arm ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¨Í¬ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½C90ï¿½ï¿½ ï¿½ï¿½ +90ï¿½ã£©
             Vector3 dir = mouseWorld - handLinePivot.position;
             if (dir.sqrMagnitude < 0.00001f) return;
 
             float angleDeg = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90f;
-            // Èç¹ûÄãµÄ HandLine ÌùÍ¼Ä¬ÈÏ³¯ ¨CY£¬ÔÙ°Ñ ¨C90¡ã ¸Ä³É +90¡ã ¾ÍÐÐ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ HandLine ï¿½ï¿½Í¼Ä¬ï¿½Ï³ï¿½ ï¿½CYï¿½ï¿½ï¿½Ù°ï¿½ ï¿½C90ï¿½ï¿½ ï¿½Ä³ï¿½ +90ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             arm.rotation = Quaternion.Euler(0f, 0f, angleDeg);
 
-            // 3. Í£Ö¹µ±Ç°Ð­³Ì£¨Èç¹ûÓÐ£©£¬ÔÙÖØÐÂ¿ªÆô
+            // 3. Í£Ö¹ï¿½ï¿½Ç°Ð­ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½
             if (activeCoroutine != null)
             {
                 StopCoroutine(activeCoroutine);
@@ -88,17 +88,17 @@ public class PlayerArmController : MonoBehaviour
     {
         canExtend = false;
         canMove = false;
-        // ¡ª¡ª Éì³¤½×¶Î ¡ª¡ª 
-        // Ä¿±êÊÀ½ç³¤¶È extendLength£¬ÒªËã³ö¶ÔÓ¦µÄ localScale.y
-        // spriteOriginalHeight = sr.bounds.size.y£¨µ± localScale=1 Ê±£©
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ì³¤ï¿½×¶ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+        // Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ç³¤ï¿½ï¿½ extendLengthï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ localScale.y
+        // spriteOriginalHeight = sr.bounds.size.yï¿½ï¿½ï¿½ï¿½ localScale=1 Ê±ï¿½ï¿½
         float desiredScaleY = extendLength / spriteOriginalHeight;
 
-        // ´Óµ±Ç° localScale.y Æ½»¬²åÖµµ½ desiredScaleY
+        // ï¿½Óµï¿½Ç° localScale.y Æ½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ desiredScaleY
         float startScaleY = handLine.localScale.y;
         float elapsed = 0f;
         if (extendDuration <= 0f)
         {
-            // Ë²Ê±Éì³¤
+            // Ë²Ê±ï¿½ì³¤
             SetHandLineScaleAndPos(desiredScaleY);
         }
         else
@@ -111,14 +111,14 @@ public class PlayerArmController : MonoBehaviour
                 SetHandLineScaleAndPos(curScale);
                 yield return null;
             }
-            // È·±£×îºóÖµ¾«È·
+            // È·ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½È·
             SetHandLineScaleAndPos(desiredScaleY);
         }
 
-        // ¡ª¡ª µÈ´ý retractDelay Ãë ¡ª¡ª 
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½ retractDelay ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         yield return new WaitForSeconds(retractDelay);
 
-        // ¡ª¡ª ÊÕ»Ø½×¶Î ¡ª¡ª 
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Õ»Ø½×¶ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         elapsed = 0f;
         if (retractDuration <= 0f)
         {
@@ -140,23 +140,24 @@ public class PlayerArmController : MonoBehaviour
         activeCoroutine = null;
         canMove = true;
         canExtend = true;
+        AudioEvent.RaiseOnPlayAudio(AudioType.Hand);
     }
 
     /// <summary>
-    /// Í¬Ê±ÉèÖÃ handLine.localScale.y ²¢Ð£Õý handLine.localPosition.y£¬
-    /// ±£Ö¤ÊÖ¸ù²¿£¨handLinePivot£©²»¶¯¡£
+    /// Í¬Ê±ï¿½ï¿½ï¿½ï¿½ handLine.localScale.y ï¿½ï¿½Ð£ï¿½ï¿½ handLine.localPosition.yï¿½ï¿½
+    /// ï¿½ï¿½Ö¤ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½handLinePivotï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     private void SetHandLineScaleAndPos(float newScaleY)
     {
-        // 1. ÉèÖÃËõ·Å
+        // 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Vector3 ls = handLine.localScale;
         ls.y = newScaleY;
         handLine.localScale = ls;
 
-        // 2. ÉèÖÃ localPosition.y
-        //    µ± localScale=1 Ê±£¬initialLocalPosY = ¨CspriteOriginalHeight/2£»
-        //    µ± localScale=newScaleY Ê±£¬Sprite µÄÖÐÐÄÏà¶Ô handLinePivot ÏÂÒÆ newScaleY ±¶£¬
-        //    ËùÒÔ newLocalPosY = initialLocalPosY * newScaleY
+        // 2. ï¿½ï¿½ï¿½ï¿½ localPosition.y
+        //    ï¿½ï¿½ localScale=1 Ê±ï¿½ï¿½initialLocalPosY = ï¿½CspriteOriginalHeight/2ï¿½ï¿½
+        //    ï¿½ï¿½ localScale=newScaleY Ê±ï¿½ï¿½Sprite ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ handLinePivot ï¿½ï¿½ï¿½ï¿½ newScaleY ï¿½ï¿½ï¿½ï¿½
+        //    ï¿½ï¿½ï¿½ï¿½ newLocalPosY = initialLocalPosY * newScaleY
         Vector3 lp = handLine.localPosition;
         lp.y = initialLocalPosY * newScaleY;
         handLine.localPosition = lp;

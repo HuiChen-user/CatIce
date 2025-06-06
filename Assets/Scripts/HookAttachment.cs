@@ -7,13 +7,13 @@ using static UnityEngine.GraphicsBuffer;
 public class HookAttachment : MonoBehaviour
 {
 
-    [Header("·¢ÉäÉèÖÃ")]
-    [Tooltip("·¢ÉäÁ¦¶È")]
-    public float throwForce = 10f; // ·¢ÉäÁ¦¶È
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    public float throwForce = 10f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    private GameObject grabbedObject; // µ±Ç°×¥È¡µÄÎïÌå
-    private bool isGrabbing;         // ÊÇ·ñÕıÔÚ×¥È¡ÎïÌå
-    private bool ignoreNextCollision; // ºöÂÔÏÂÒ»´ÎÅö×²±êÖ¾
+    private GameObject grabbedObject; // ï¿½ï¿½Ç°×¥È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private bool isGrabbing;         // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½×¥È¡ï¿½ï¿½ï¿½ï¿½
+    private bool ignoreNextCollision; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½Ö¾
 
     void Update()
     {
@@ -25,7 +25,7 @@ public class HookAttachment : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Èç¹ûÉèÖÃÁËºöÂÔ±êÖ¾£¬Ìø¹ı´Ë´ÎÅö×²
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½Ô±ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë´ï¿½ï¿½ï¿½×²
         if (ignoreNextCollision)
         {
             ignoreNextCollision = false;
@@ -47,49 +47,51 @@ public class HookAttachment : MonoBehaviour
         isGrabbing = true;
         grabbedObject = obj;
 
-        // ÉèÖÃÎª¹³×ÓµÄ×ÓÎïÌå
+        // ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         obj.transform.SetParent(transform);
 
-        // ½ûÓÃÎïÌåµÄÎïÀíÊôĞÔ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             rb.simulated = false;
         }
 
-        // ÖØÖÃÎ»ÖÃ
+        // ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
         obj.transform.localPosition = Vector3.zero;
+        AudioEvent.RaiseOnPlayAudio(AudioType.Interact);
     }
 
     void ThrowObject()
     {
         if (grabbedObject == null) return;
 
-        // ½â³ı¸¸×Ó¹ØÏµ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¹ï¿½Ïµ
         grabbedObject.transform.SetParent(null);
 
-        // ÖØĞÂÆôÓÃÎïÀíÊôĞÔ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Rigidbody2D rb = grabbedObject.GetComponent<Rigidbody2D>();
         //rb.gravityScale = 0;
         if (rb != null)
         {
             rb.simulated = true;
 
-            // ¼ÆËãÊó±ê·½Ïò
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê·½ï¿½ï¿½
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (new Vector2(mousePosition.x, mousePosition.y) -
                                 (Vector2)transform.position);
             direction = direction.normalized;
 
-            // Ê©¼ÓÁ¦¶È
+            // Ê©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             rb.AddForce(direction * throwForce, ForceMode2D.Impulse);
         }
 
-        // ÉèÖÃºöÂÔÏÂÒ»´ÎÅö×²±êÖ¾
+        // ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½Ö¾
         ignoreNextCollision = true;
 
-        // ÖØÖÃ×´Ì¬
+        // ï¿½ï¿½ï¿½ï¿½×´Ì¬
         grabbedObject = null;
         isGrabbing = false;
+        AudioEvent.RaiseOnPlayAudio(AudioType.Throw);
     }
 }

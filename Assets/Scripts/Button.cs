@@ -12,20 +12,24 @@ public class Button : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Level1");
+        AudioEvent.RaiseOnPlayAudio(AudioType.UI_Tap);
     }
     public void ExitGame()
     {
         Application.Quit();
+        AudioEvent.RaiseOnPlayAudio(AudioType.UI_Tap);
     }
     public void Credit()
     {
         CreditPanel.SetActive(true);
         EditPanel.SetActive(false);
+        AudioEvent.RaiseOnPlayAudio(AudioType.UI_Tap);
     }
     public void Edit()
     {
         EditPanel.SetActive(true);
         CreditPanel.SetActive(false);
+        AudioEvent.RaiseOnPlayAudio(AudioType.UI_Tap);
     }
 
     public void QuitPanel()

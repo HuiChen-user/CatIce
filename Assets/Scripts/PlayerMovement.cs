@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //水平移动
             rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-
+            AudioEvent.RaiseOnPlayAudio(AudioType.Walk);
             if (jumpPressed && isGrounded)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
