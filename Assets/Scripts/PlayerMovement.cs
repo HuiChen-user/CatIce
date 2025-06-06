@@ -18,11 +18,11 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     public float moveInput;       // 水平移动值
-    private bool isGrounded;       // 是否正站在地面上
+    public static bool isGrounded;       // 是否正站在地面上
     private bool jumpPressed;      // 是否按下跳跃键
     public bool isFacingRight = false;  // 角色是否面向右边
 
-    
+    public GameObject foot;
 
     // 公开朝向状态的只读属性
     public bool IsFacingRight => isFacingRight;
@@ -105,19 +105,5 @@ public class PlayerMovement : MonoBehaviour
         transform.eulerAngles = rotation;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
-    }
+    
 }

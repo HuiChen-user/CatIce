@@ -7,16 +7,20 @@ public class Rotation : MonoBehaviour
 {
     
     private float rotationSpeed = 50f;
-    public HoleRotation _holeRotation;
-    
-    void Update()
+    private bool isR=false;
+
+    private void Update()
     {
-        if (_holeRotation.isRotating)
+        if (isR)
         {
             transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
         }
     }
-
+    public void Ro()
+    {
+        isR=true;
+        
+    }
     /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interactivity"))
