@@ -10,6 +10,8 @@ public class PlayerArmController : MonoBehaviour
     public Transform handLine;        // ������ SpriteRenderer �����壬Pivot �� Sprite ����
     public Transform hand;
     public Transform handRoot;
+    public HookAttachment ha;
+    private bool isExtendThenRetractRun=false;
 
     [Header("��������")]
     public float extendLength = 2f;   // Ҫ���ֱ��쵽���������ж೤
@@ -28,6 +30,7 @@ public class PlayerArmController : MonoBehaviour
 
     void Start()
     {
+        ha=hand.GetComponent<HookAttachment>();
         if (arm == null || handLinePivot == null || handLine == null)
         {
             Debug.LogError("��� arm��handLinePivot��handLine ���ϵ��ű��");
@@ -58,6 +61,14 @@ public class PlayerArmController : MonoBehaviour
 
     void Update()
     {
+        if (ha.isGrabbing)
+        {
+            canExtend = false;
+        }
+        if(!ha.isGrabbing&&!isExtendThenRetractRun)
+        {
+            canExtend=true;
+        }
         Vector3 handRootEA=handRoot.eulerAngles;
         hand.transform.eulerAngles=new Vector3(handRootEA.x,handRootEA.y,handRootEA.z-90);
         hand.transform.position = handRoot.transform.position;
@@ -87,6 +98,7 @@ public class PlayerArmController : MonoBehaviour
     private System.Collections.IEnumerator ExtendThenRetract()
     {
         canExtend = false;
+        isExtendThenRetractRun = true;
         canMove = false;
         // ���� �쳤�׶� ���� 
         // Ŀ�����糤�� extendLength��Ҫ�����Ӧ�� localScale.y
@@ -141,6 +153,7 @@ public class PlayerArmController : MonoBehaviour
         canMove = true;
         canExtend = true;
         AudioEvent.RaiseOnPlayAudio(AudioType.Hand);
+        isExtendThenRetractRun = false;
     }
 
     /// <summary>

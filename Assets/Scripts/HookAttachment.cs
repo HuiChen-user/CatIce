@@ -12,12 +12,12 @@ public class HookAttachment : MonoBehaviour
     public float throwForce = 10f; // ��������
 
     private GameObject grabbedObject; // ��ǰץȡ������
-    private bool isGrabbing;         // �Ƿ�����ץȡ����
+    public bool isGrabbing;         // �Ƿ�����ץȡ����
     private bool ignoreNextCollision; // ������һ����ײ��־
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isGrabbing&&PlayerArmController.canExtend)
+        if (Input.GetKeyDown(KeyCode.E) && isGrabbing)
         {
             ThrowObject();
         }
