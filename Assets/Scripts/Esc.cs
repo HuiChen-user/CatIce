@@ -5,6 +5,7 @@ using UnityEngine;
 public class Esc : MonoBehaviour
 {
     public GameObject menuUI; // 引用你的菜单界面
+    
 
     private void Start()
     {

@@ -97,6 +97,7 @@ public class PlayerArmController : MonoBehaviour
 
     private System.Collections.IEnumerator ExtendThenRetract()
     {
+        AudioEvent.RaiseOnPlayAudio(AudioType.Hand);
         canExtend = false;
         isExtendThenRetractRun = true;
         canMove = false;
@@ -152,7 +153,7 @@ public class PlayerArmController : MonoBehaviour
         activeCoroutine = null;
         canMove = true;
         canExtend = true;
-        AudioEvent.RaiseOnPlayAudio(AudioType.Hand);
+        
         isExtendThenRetractRun = false;
     }
 
