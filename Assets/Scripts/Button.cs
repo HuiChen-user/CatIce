@@ -16,6 +16,7 @@ public class Button : MonoBehaviour
     }
     public void ExitGame()
     {
+        
         Application.Quit();
         AudioEvent.RaiseOnPlayAudio(AudioType.UI_Tap);
     }

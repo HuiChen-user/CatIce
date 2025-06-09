@@ -5,7 +5,11 @@ using UnityEngine;
 public class Esc : MonoBehaviour
 {
     public GameObject menuUI; // 引用你的菜单界面
-    
+    private void Awake()
+    {
+        menuUI.SetActive(false);
+        DontDestroyOnLoad(this);
+    }
 
     private void Start()
     {
@@ -34,8 +38,6 @@ public class Esc : MonoBehaviour
         bool isMenuActive = menuUI.activeSelf;
         menuUI.SetActive(!isMenuActive);
 
-        // 锁定/解锁鼠标（根据菜单状态）
-        Cursor.lockState = isMenuActive ? CursorLockMode.Locked : CursorLockMode.None;
-        Cursor.visible = !isMenuActive;
+        
     }
 }

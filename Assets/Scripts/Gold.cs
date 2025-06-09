@@ -11,6 +11,8 @@ public class Gold : MonoBehaviour
         isPass = true;
         if (collision.CompareTag("Player"))
         {
+            PlayerArmController.canExtend = true;
+            PlayerArmController.canMove = true;
             SceneManager.LoadScene("Level1");
         }
     }

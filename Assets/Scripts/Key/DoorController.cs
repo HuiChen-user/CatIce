@@ -14,7 +14,7 @@ public class DoorController : MonoBehaviour
     /// </summary>
     public void OpenDoor()
     {
-        if (isOpen) return;
+        
         isOpen = true;
    
         this.gameObject.SetActive(true);

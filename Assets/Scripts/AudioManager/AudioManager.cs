@@ -49,15 +49,7 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
        
-            if (_instance == null)
-            {
-                _instance = this;
-                DontDestroyOnLoad(this.gameObject);  // 保持实例不被销毁
-            }
-            else if (_instance != this)
-            {
-                Destroy(gameObject);  // 如果已经有实例，销毁新实例
-            }
+            
 
             // 确保 OnEnable 能被触发
             inAudioSource();

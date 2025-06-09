@@ -11,6 +11,8 @@ public class SceneChange : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            PlayerArmController.canExtend = true;
+            PlayerArmController.canMove = true;
             SceneManager.LoadScene(SceneName);
         }
     }
