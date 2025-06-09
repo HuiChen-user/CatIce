@@ -92,6 +92,7 @@ public class PlayerArmController : MonoBehaviour
                 StopCoroutine(activeCoroutine);
             }
             activeCoroutine = StartCoroutine(ExtendThenRetract());
+            AudioEvent.RaiseOnPlayAudio(AudioType.Hand);
         }
     }
 
@@ -152,7 +153,7 @@ public class PlayerArmController : MonoBehaviour
         activeCoroutine = null;
         canMove = true;
         canExtend = true;
-        AudioEvent.RaiseOnPlayAudio(AudioType.Hand);
+       
         isExtendThenRetractRun = false;
     }
 

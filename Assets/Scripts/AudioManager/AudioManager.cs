@@ -48,25 +48,32 @@ public class AudioManager : MonoBehaviour
     //确保实例在场景切换中不会被摧毁
     private void Awake()
     {
-        if (_instance != null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else if (_instance!=this)
-        {
-            Destroy(gameObject);//如果已经存在实例，销毁多余的实例
-        }
-        inAudioSource();
+       
+            if (_instance == null)
+            {
+                _instance = this;
+                DontDestroyOnLoad(this.gameObject);  // 保持实例不被销毁
+            }
+            else if (_instance != this)
+            {
+                Destroy(gameObject);  // 如果已经有实例，销毁新实例
+            }
+
+            // 确保 OnEnable 能被触发
+            inAudioSource();
+        
+
     }
 
     private void OnEnable()
     {
+        Debug.Log("OnEnable");
         AudioEvent.OnPlayAudio += PlayerAudio;
     }
 
     private void OnDisable()
     {
+        Debug.Log("Disable");
         AudioEvent.OnPlayAudio -= PlayerAudio;
     }
 
